@@ -1,8 +1,8 @@
 package com.algaworks.algamoneyapi.resource;
 
 import com.algaworks.algamoneyapi.event.CreateResourceEvent;
-import com.algaworks.algamoneyapi.model.Category;
-import com.algaworks.algamoneyapi.repository.CategoryRepository;
+import com.algaworks.algamoneyapi.model.Person;
+import com.algaworks.algamoneyapi.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -14,24 +14,24 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/categories")
-public class CategoryResource {
+@RequestMapping("/person")
+public class PersonResource {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private PersonRepository personRepository;
 
     @Autowired
     private ApplicationEventPublisher publisher;
 
     @GetMapping
-    public List<Category> list() {
-        return categoryRepository.findAll();
+    public List<Person> list() {
+        return personRepository.findAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Category> create(@Valid @RequestBody Category category, HttpServletResponse response) {
-        Category entity = categoryRepository.save(category);
+    public ResponseEntity<Person> create(@Valid @RequestBody Person person, HttpServletResponse response) {
+        Person entity = personRepository.save(person);
 
         publisher.publishEvent(new CreateResourceEvent(this, response, entity.getId()));
 
@@ -39,10 +39,10 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> find(@PathVariable Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        return category.isPresent()
-            ? ResponseEntity.ok(category.get())
+    public ResponseEntity<Person> find(@PathVariable Long id) {
+        Optional<Person> person = personRepository.findById(id);
+        return person.isPresent()
+            ? ResponseEntity.ok(person.get())
             : ResponseEntity.notFound().build()
         ;
 

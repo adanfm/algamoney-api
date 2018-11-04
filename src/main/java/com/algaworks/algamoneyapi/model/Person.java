@@ -6,17 +6,23 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name="category")
-public class Category {
+@Table(name="person")
+public class Person {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @Size(min=3, max=20)
     @Column(length=50)
     private String name;
+
+    @Embedded
+    private Address address;
+
+    @NotNull
+    private Boolean active;
 
     public Long getId() {
         return id;
@@ -34,12 +40,28 @@ public class Category {
         this.name = name;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
+        Person person = (Person) o;
+        return Objects.equals(id, person.id);
     }
 
     @Override
