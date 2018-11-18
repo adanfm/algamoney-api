@@ -1,5 +1,7 @@
 package com.algaworks.algamoneyapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -54,6 +56,12 @@ public class Person {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    @JsonIgnore
+    @Transient
+    public boolean isInactive() {
+        return !this.active;
     }
 
     @Override

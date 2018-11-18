@@ -24,7 +24,7 @@ public class PersonService {
         return personRepository.save(personSave);
     }
 
-    private Optional<Person> getPerson(Long id) {
+    public Optional<Person> getPerson(Long id) {
         Optional<Person> personEntity = personRepository.findById(id);
 
         if (personEntity.isPresent() == false) {
